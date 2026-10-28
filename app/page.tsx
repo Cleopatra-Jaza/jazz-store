@@ -6,7 +6,7 @@ import WhyJazz from "@/components/WhyJazz";
 
 export default function Home() {
   return (
-    <main className="flex flex-1 bg-background">
+    <main className="flex-1 bg-background">
       <Hero />
       <Marquee />
       <FeaturedProducts />
