@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Button from "@/components/ui/Button";
+import { useCart } from "@/components/CartProvider";
 import type { Product } from "@/data/products";
 import { formatPrice } from "@/data/products";
 
@@ -11,6 +12,7 @@ interface ProductDetailProps {
 }
 
 export default function ProductDetail({ product }: ProductDetailProps) {
+  const { addItem, openCart } = useCart();
   const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
   const [selectedSize, setSelectedSize] = useState<string | null>(
     product.sizes.length === 1 && product.sizes[0] === "One Size"
@@ -34,9 +36,21 @@ export default function ProductDetail({ product }: ProductDetailProps) {
 
   const handleAdd = () => {
     if (sizeRequired && !selectedSize) return;
+    addItem(
+      {
+        slug: product.slug,
+        name: product.name,
+        image: selectedVariant.image,
+        color: selectedVariant.color,
+        size: selectedSize!,
+        price: product.price,
+      },
+      quantity
+    );
     setAdded(true);
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => setAdded(false), 1500);
+    openCart();
   };
 
   return (

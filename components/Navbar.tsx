@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Button from "@/components/ui/Button";
+import CartButton from "@/components/CartButton";
 
 export default function Navbar() {
   return (
@@ -15,11 +15,7 @@ export default function Navbar() {
           >
             Shop
           </Link>
-          <Link href="/cart">
-            <Button variant="secondary" size="sm">
-              Cart
-            </Button>
-          </Link>
+          <CartButton />
         </div>
       </div>
     </nav>
