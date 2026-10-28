@@ -8,6 +8,7 @@ interface ButtonProps {
   size?: ButtonSize;
   href?: string;
   className?: string;
+  disabled?: boolean;
   onClick?: () => void;
   children?: React.ReactNode;
 }
@@ -29,14 +30,18 @@ export default function Button({
   size = "md",
   href,
   className,
+  disabled,
   onClick,
   children,
 }: ButtonProps) {
   const base =
     "inline-flex items-center justify-center rounded-full font-medium transition-colors active:scale-95";
   const classes = `${base} ${variantStyles[variant]} ${sizeStyles[size]} ${className ?? ""}`;
+  const disabledClasses = disabled
+    ? "pointer-events-none opacity-50 cursor-not-allowed"
+    : "";
 
-  if (href) {
+  if (href && !disabled) {
     return (
       <Link href={href} onClick={onClick} className={classes}>
         {children}
@@ -44,8 +49,19 @@ export default function Button({
     );
   }
 
+  if (href && disabled) {
+    return (
+      <span className={`${classes} ${disabledClasses}`}>{children}</span>
+    );
+  }
+
   return (
-    <button type="button" onClick={onClick} className={classes}>
+    <button
+      type="button"
+      disabled={disabled}
+      onClick={onClick}
+      className={`${classes} ${disabledClasses}`}
+    >
       {children}
     </button>
   );
