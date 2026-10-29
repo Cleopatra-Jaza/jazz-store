@@ -35,7 +35,7 @@ export default function Button({
   children,
 }: ButtonProps) {
   const base =
-    "inline-flex items-center justify-center rounded-full font-medium transition-colors active:scale-95";
+    "inline-flex items-center justify-center rounded-full font-medium transition-colors active:scale-95 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface focus-visible:outline-none";
   const classes = `${base} ${variantStyles[variant]} ${sizeStyles[size]} ${className ?? ""}`;
   const disabledClasses = disabled
     ? "pointer-events-none opacity-50 cursor-not-allowed"

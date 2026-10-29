@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { CartProvider } from "@/components/CartProvider";
 import CartDrawer from "@/components/CartDrawer";
-import Navbar from "@/components/Navbar";
+import NavbarShell from "@/components/NavbarShell";
 import Footer from "@/components/Footer";
 import "./globals.css";
 
@@ -17,7 +17,19 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Jazz | Motorsport Apparel",
+  title: {
+    default: "Jazz | Motorsport Apparel",
+    template: "%s | Jazz",
+  },
+  description:
+    "Motorsport streetwear built for the track and the street. Premium apparel, fast island-wide delivery.",
+  openGraph: {
+    siteName: "Jazz",
+    type: "website",
+    title: "Jazz | Motorsport Apparel",
+    description:
+      "Motorsport streetwear built for the track and the street. Premium apparel, fast island-wide delivery.",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -27,9 +39,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-full focus:bg-accent focus:px-4 focus:py-2 focus:text-white focus-visible:ring-2 focus-visible:ring-accent"
+        >
+          Skip to content
+        </a>
         <CartProvider>
-          <Navbar />
-          <main className="flex-1">{children}</main>
+          <NavbarShell />
+          <main id="main-content" className="flex-1">
+            {children}
+          </main>
           <Footer />
           <CartDrawer />
         </CartProvider>

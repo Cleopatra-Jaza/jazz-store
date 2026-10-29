@@ -1,12 +1,14 @@
+import { Fragment } from "react";
+
 const words = ["RACE", "DRIFT", "JAZZ", "REPEAT"];
 
 const row = (
   <>
-    {words.map((word) => (
-      <>
+    {words.map((word, i) => (
+      <Fragment key={word + i}>
         <span className="text-muted-foreground">{word}</span>
         <span className="text-accent mx-1.5">•</span>
-      </>
+      </Fragment>
     ))}
   </>
 );
