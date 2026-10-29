@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Oswald } from "next/font/google";
 import { CartProvider } from "@/components/CartProvider";
+import { ToastProvider } from "@/components/ToastProvider";
 import CartDrawer from "@/components/CartDrawer";
 import NavbarShell from "@/components/NavbarShell";
 import Footer from "@/components/Footer";
+import AnnouncementBar from "@/components/AnnouncementBar";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -14,6 +16,13 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const oswald = Oswald({
+  variable: "--font-oswald",
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -36,7 +45,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${oswald.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <a
@@ -45,14 +54,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           Skip to content
         </a>
-        <CartProvider>
-          <NavbarShell />
-          <main id="main-content" className="flex-1">
-            {children}
-          </main>
-          <Footer />
-          <CartDrawer />
-        </CartProvider>
+        <ToastProvider>
+          <CartProvider>
+            <AnnouncementBar />
+            <NavbarShell />
+            <main id="main-content" className="flex-1">
+              {children}
+            </main>
+            <Footer />
+            <CartDrawer />
+          </CartProvider>
+        </ToastProvider>
       </body>
     </html>
   );

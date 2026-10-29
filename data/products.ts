@@ -199,7 +199,8 @@ export const products: Product[] = [
 ];
 
 export function formatPrice(price: number): string {
-  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(price);
+  const formatted = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return `Rs. ${formatted}`;
 }
 
 export function getProductBySlug(slug: string): Product | undefined {

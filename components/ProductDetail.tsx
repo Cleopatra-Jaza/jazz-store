@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Button from "@/components/ui/Button";
 import { useCart } from "@/components/CartProvider";
+import { useToast } from "@/components/ToastProvider";
 import type { Product } from "@/data/products";
 import { formatPrice } from "@/data/products";
 
@@ -13,6 +14,7 @@ interface ProductDetailProps {
 
 export default function ProductDetail({ product }: ProductDetailProps) {
   const { addItem, openCart } = useCart();
+  const { showToast } = useToast();
   const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
   const [selectedSize, setSelectedSize] = useState<string | null>(
     product.sizes.length === 1 && product.sizes[0] === "One Size"
@@ -51,6 +53,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => setAdded(false), 1500);
     openCart();
+    showToast(`${product.name} added to cart`);
   };
 
   return (
@@ -96,7 +99,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
         <p className="text-xs text-muted-foreground uppercase tracking-wider">
           {product.category}
         </p>
-        <h1 className="text-3xl lg:text-4xl font-bold text-foreground">
+        <h1 className="text-3xl lg:text-4xl font-bold text-foreground font-display">
           {product.name}
         </h1>
         <div className="flex items-baseline gap-2">

@@ -10,7 +10,7 @@ export default function Navbar({ menuOpen, onMenuToggle }: NavbarProps) {
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-        <Link href="/" className="font-bold text-xl tracking-widest text-foreground">
+        <Link href="/" className="font-bold text-xl tracking-widest text-foreground font-display">
           JAZZ
         </Link>
 

@@ -10,7 +10,7 @@ export default function FeaturedProducts() {
     <section className="py-16 md:py-24">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground font-display">
             Featured Drops
           </h2>
           <Button variant="ghost" size="sm" href="/products">

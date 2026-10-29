@@ -21,7 +21,7 @@ export default function Hero() {
           NEW SEASON
         </span>
         <h1
-          className="text-5xl lg:text-7xl font-bold tracking-tight uppercase text-foreground animate-fade-up"
+          className="text-5xl lg:text-7xl font-bold tracking-tight uppercase text-foreground animate-fade-up font-display"
           style={{ animationDelay: "0.15s" }}
         >
           BUILT FOR SPEED.

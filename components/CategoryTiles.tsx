@@ -27,7 +27,7 @@ export default function CategoryTiles() {
   return (
     <section className="py-16 md:py-24">
       <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">
+        <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8 font-display">
           Shop by category
         </h2>
         <Reveal>

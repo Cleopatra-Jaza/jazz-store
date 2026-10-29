@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useCart } from "@/components/CartProvider";
+import { useToast } from "@/components/ToastProvider";
 import Button from "@/components/ui/Button";
 import { formatPrice } from "@/data/products";
 
@@ -18,6 +19,7 @@ export default function CartDrawer() {
     clearCart,
     closeCart,
   } = useCart();
+  const { showToast } = useToast();
 
   useEffect(() => {
     if (!isOpen) return;
@@ -164,7 +166,10 @@ export default function CartDrawer() {
               </Button>
               <button
                 type="button"
-                onClick={clearCart}
+                onClick={() => {
+                  clearCart();
+                  showToast("Cart cleared");
+                }}
                 className="text-xs text-muted-foreground hover:text-foreground"
               >
                 Clear cart
