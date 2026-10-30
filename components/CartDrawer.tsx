@@ -161,9 +161,9 @@ export default function CartDrawer() {
               </span>
             </div>
             <div className="mt-3 flex flex-col gap-2">
-              <Button variant="primary" size="lg" disabled>
-                Checkout (coming soon)
-              </Button>
+              <Button variant="primary" size="lg" href="/checkout" onClick={closeCart}>
+  Checkout
+</Button>
               <button
                 type="button"
                 onClick={() => {

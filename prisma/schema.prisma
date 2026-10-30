@@ -37,3 +37,40 @@ model Variant {
 
   @@index([productId])
 }
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+model Order {
+  id            String      @id @default(cuid())
+  createdAt     DateTime    @default(now())
+  status        OrderStatus @default(PENDING)
+  customerName  String
+  phone         String
+  email         String?
+  address       String
+  city          String
+  notes         String?
+  subtotal      Decimal     @db.Decimal(10, 2)
+  items         OrderItem[]
+
+  @@index([createdAt])
+}
+
+model OrderItem {
+  id           String  @id @default(cuid())
+  orderId      String
+  order        Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productSlug  String
+  name         String
+  color        String
+  size         String
+  unitPrice    Decimal @db.Decimal(10, 2)
+  quantity     Int
+
+  @@index([orderId])
+}
