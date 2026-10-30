@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
-import { products } from "@/data/products";
+import { getAllSlugs } from "@/lib/products";
 
 const BASE_URL = "https://jazz.example.com";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const slugs = await getAllSlugs();
   const entries: MetadataRoute.Sitemap = [
     {
       url: BASE_URL,
@@ -15,8 +16,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.9,
     },
-    ...products.map((product) => ({
-      url: `${BASE_URL}/products/${product.slug}`,
+    ...slugs.map((slug) => ({
+      url: `${BASE_URL}/products/${slug}`,
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),

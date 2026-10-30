@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Button from "@/components/ui/Button";
-import { products, defaultImage } from "@/data/products";
+import { defaultImage } from "@/data/products";
+import type { Product } from "@/data/products";
 
-export default function Hero() {
+export default function Hero({ products }: { products: Product[] }) {
   const first = products[0];
   const image = first ? defaultImage(first) : "";
 

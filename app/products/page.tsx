@@ -1,10 +1,37 @@
 import { Metadata } from "next";
-import { products } from "@/data/products";
+import { Suspense } from "react";
+import type { Product } from "@/data/products";
 import ProductGrid from "@/components/ProductGrid";
+import { prisma } from "@/lib/prisma";
 
 export const metadata: Metadata = {
   title: "Shop | Jazz",
 };
+
+async function ProductList() {
+  const rows = await prisma.product.findMany({
+    include: { variants: true },
+    orderBy: { id: "asc" },
+  });
+
+  const products: Product[] = rows.map((p) => ({
+    id: p.id,
+    slug: p.slug,
+    name: p.name,
+    category: p.category,
+    gender: p.gender,
+    price: Number(p.price),
+    sizes: p.sizes,
+    description: p.description,
+    variants: p.variants.map((v) => ({
+      color: v.color,
+      hex: v.hex,
+      image: v.image,
+    })),
+  }));
+
+  return <ProductGrid products={products} />;
+}
 
 export default function ProductsPage() {
   return (
@@ -16,7 +43,11 @@ export default function ProductsPage() {
             Motorsport streetwear built for the track and the street.
           </p>
         </div>
-        <ProductGrid products={products} />
+        <Suspense
+          fallback={<p className="text-muted-foreground">Loading products...</p>}
+        >
+          <ProductList />
+        </Suspense>
       </div>
     </main>
   );

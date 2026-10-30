@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Gender {
+  men
+  women
+  unisex
+}
+
+model Product {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  name        String
+  category    String
+  gender      Gender
+  price       Decimal   @db.Decimal(10, 2)
+  description String
+  sizes       String[]
+  variants    Variant[]
+
+  @@index([category])
+  @@index([gender])
+}
+
+model Variant {
+  id        String  @id @default(cuid())
+  color     String
+  hex       String
+  image     String
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+}

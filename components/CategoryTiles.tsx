@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { products } from "@/data/products";
+import type { Product } from "@/data/products";
 import Reveal from "@/components/Reveal";
 
 interface Tile {
@@ -9,21 +9,22 @@ interface Tile {
   image: string;
 }
 
-const tiles: Tile[] = Array.from(
-  new Set(products.map((p) => p.category))
-)
-  .map((category) => {
-    const items = products.filter((p) => p.category === category);
-    if (items.length === 0) return null;
-    return {
-      category,
-      count: items.length,
-      image: items[0].variants[0].image,
-    };
-  })
-  .filter((t): t is Tile => t !== null);
+function buildTiles(products: Product[]): Tile[] {
+  return Array.from(new Set(products.map((p) => p.category)))
+    .map((category) => {
+      const items = products.filter((p) => p.category === category);
+      if (items.length === 0) return null;
+      return {
+        category,
+        count: items.length,
+        image: items[0].variants[0].image,
+      };
+    })
+    .filter((t): t is Tile => t !== null);
+}
 
-export default function CategoryTiles() {
+export default function CategoryTiles({ products }: { products: Product[] }) {
+  const tiles = buildTiles(products);
   return (
     <section className="py-16 md:py-24">
       <div className="max-w-6xl mx-auto px-4">

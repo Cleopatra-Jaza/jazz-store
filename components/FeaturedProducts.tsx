@@ -1,9 +1,9 @@
-import { products } from "@/data/products";
+import type { Product } from "@/data/products";
 import ProductCard from "@/components/ProductCard";
 import Reveal from "@/components/Reveal";
 import Button from "@/components/ui/Button";
 
-export default function FeaturedProducts() {
+export default function FeaturedProducts({ products }: { products: Product[] }) {
   const featured = products.slice(0, 4);
 
   return (

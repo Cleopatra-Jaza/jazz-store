@@ -42,7 +42,7 @@ export const products: Product[] = [
     name: "Apex Oversized Tee",
     category: "T-Shirts",
     gender: "unisex",
-    price: 35,
+    price:10500,
     sizes: ["S", "M", "L", "XL", "XXL"],
     description: "Heavyweight oversized tee with a minimalist apex logo on the chest.",
     variants: [
@@ -58,7 +58,7 @@ export const products: Product[] = [
     name: "Checkered Flag Cap",
     category: "Accessories",
     gender: "unisex",
-    price: 25,
+    price: 7500,
     sizes: ["One Size"],
     description: "Structured cap with a vintage checkered flag patch.",
     variants: [
@@ -74,7 +74,7 @@ export const products: Product[] = [
     name: "Drift King Tee",
     category: "T-Shirts",
     gender: "men",
-    price: 32,
+    price:9600,
     sizes: ["S", "M", "L", "XL"],
     description: "Graphic tee inspired by drift culture and track days.",
     variants: [
@@ -90,7 +90,7 @@ export const products: Product[] = [
     name: "Jazz Keychain",
     category: "Accessories",
     gender: "unisex",
-    price: 12,
+    price: 3600,
     sizes: ["One Size"],
     description: "Racing-inspired keychain with the Jazz logo.",
     variants: [
@@ -106,7 +106,7 @@ export const products: Product[] = [
     name: "Night Run Zip Hoodie",
     category: "Hoodies",
     gender: "unisex",
-    price: 55,
+    price: 16500,
     sizes: ["S", "M", "L", "XL", "XXL"],
     description: "Zip-up hoodie with reflective details for night runs.",
     variants: [
@@ -122,7 +122,7 @@ export const products: Product[] = [
     name: "Pit Crew Cap",
     category: "Accessories",
     gender: "unisex",
-    price: 22,
+    price: 3600,
     sizes: ["One Size"],
     description: "Classic pit crew cap with embroidered branding.",
     variants: [
@@ -138,7 +138,7 @@ export const products: Product[] = [
     name: "Pit Crew Pullover Hoodie",
     category: "Hoodies",
     gender: "unisex",
-    price: 48,
+    price:14400,
     sizes: ["S", "M", "L", "XL"],
     description: "Pullover hoodie built for the pit crew look.",
     variants: [
@@ -154,7 +154,7 @@ export const products: Product[] = [
     name: "Jazz Racing Tote Bag",
     category: "Accessories",
     gender: "unisex",
-    price: 28,
+    price: 8400,
     sizes: ["One Size"],
     description: "Durable tote bag for race day gear.",
     variants: [
@@ -170,7 +170,7 @@ export const products: Product[] = [
     name: "Redline Graphic Tee",
     category: "T-Shirts",
     gender: "men",
-    price: 34,
+    price: 10200,
     sizes: ["S", "M", "L", "XL"],
     description: "Graphic tee with a redline speedometer design.",
     variants: [
@@ -186,7 +186,7 @@ export const products: Product[] = [
     name: "Track Day Windbreaker Jacket",
     category: "Outerwear",
     gender: "unisex",
-    price: 65,
+    price: 19500,
     sizes: ["S", "M", "L", "XL", "XXL"],
     description: "Lightweight windbreaker for track day conditions.",
     variants: [

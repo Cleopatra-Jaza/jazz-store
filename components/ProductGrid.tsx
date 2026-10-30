@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import ProductCard from "@/components/ProductCard";
 import Button from "@/components/ui/Button";
 import FilterDrawer from "@/components/FilterDrawer";
@@ -28,6 +28,8 @@ export default function ProductGrid({ products: allProducts }: ProductGridProps)
   const [sort, setSort] = useState<string>("featured");
   const [pricePreset, setPricePreset] = useState<PricePreset>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const closeDrawer = useCallback(() => setDrawerOpen(false), []);
 
   const categories = useMemo(
     () => ["All", ...Array.from(new Set(allProducts.map((p) => p.category)))],
@@ -91,55 +93,6 @@ export default function ProductGrid({ products: allProducts }: ProductGridProps)
         ? "bg-accent text-white"
         : "border border-border text-muted-foreground hover:bg-surface hover:text-foreground"
     }`;
-
-  const FilterSection = () => (
-    <div className="flex flex-col gap-6">
-      <div>
-        <h3 className="text-sm font-semibold text-foreground mb-2">Category</h3>
-        <div className="flex flex-wrap gap-2">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setCategory(cat)}
-              className={pill(category === cat)}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-      </div>
-      <div>
-        <h3 className="text-sm font-semibold text-foreground mb-2">Gender</h3>
-        <div className="flex flex-wrap gap-2">
-          {genders.map((gen) => (
-            <button
-              key={gen}
-              onClick={() => setGender(gen)}
-              className={pill(gender === gen)}
-            >
-              {gen}
-            </button>
-          ))}
-        </div>
-      </div>
-      <div>
-        <h3 className="text-sm font-semibold text-foreground mb-2">Price</h3>
-        <div className="flex flex-wrap gap-2">
-          {pricePresets.map((pr) => (
-            <button
-              key={pr.id}
-              onClick={() =>
-                setPricePreset((p) => (p === pr.id ? null : pr.id))
-              }
-              className={pill(pricePreset === pr.id)}
-            >
-              {pr.label}
-            </button>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
 
   return (
     <div className="space-y-10">
@@ -297,13 +250,13 @@ export default function ProductGrid({ products: allProducts }: ProductGridProps)
 
       <FilterDrawer
         open={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
+        onClose={closeDrawer}
         footer={
           <div className="flex flex-col gap-2">
             <Button
               variant="primary"
               size="lg"
-              onClick={() => setDrawerOpen(false)}
+              onClick={closeDrawer}
             >
               Show {filtered.length} products
             </Button>
@@ -311,7 +264,7 @@ export default function ProductGrid({ products: allProducts }: ProductGridProps)
               type="button"
               onClick={() => {
                 clearAll();
-                setDrawerOpen(false);
+                closeDrawer();
               }}
               className="text-sm text-muted-foreground hover:text-foreground"
             >
@@ -320,7 +273,52 @@ export default function ProductGrid({ products: allProducts }: ProductGridProps)
           </div>
         }
       >
-        <FilterSection />
+        <div className="flex flex-col gap-6">
+          <div>
+            <h3 className="text-sm font-semibold text-foreground mb-2">Category</h3>
+            <div className="flex flex-wrap gap-2">
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setCategory(cat)}
+                  className={pill(category === cat)}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold text-foreground mb-2">Gender</h3>
+            <div className="flex flex-wrap gap-2">
+              {genders.map((gen) => (
+                <button
+                  key={gen}
+                  onClick={() => setGender(gen)}
+                  className={pill(gender === gen)}
+                >
+                  {gen}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold text-foreground mb-2">Price</h3>
+            <div className="flex flex-wrap gap-2">
+              {pricePresets.map((pr) => (
+                <button
+                  key={pr.id}
+                  onClick={() =>
+                    setPricePreset((p) => (p === pr.id ? null : pr.id))
+                  }
+                  className={pill(pricePreset === pr.id)}
+                >
+                  {pr.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
       </FilterDrawer>
     </div>
   );
