@@ -1,6 +1,17 @@
 # Jazz Store
 
 A full-stack e-commerce web app for premium motorsport-inspired apparel. Built as a portfolio project with a dark, luxury design, a Postgres database, server-side checkout and a password-protected admin area.
+## Screenshots
+
+![Home page](docs/screenshots/home.png)
+
+![Product page](docs/screenshots/product.png)
+
+![Admin login](docs/screenshots/login.png)
+
+![Admin dashboard](docs/screenshots/admin.png)
+
+![Admin dashboard, second view](docs/screenshots/admin-2.png)
 
 ## Features
 
