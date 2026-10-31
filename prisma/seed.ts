@@ -2,13 +2,14 @@ import "dotenv/config";
 import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { products } from "../data/products";
+import { supabaseCa } from "../lib/supabase-ca";
 
 const url = new URL(process.env.DATABASE_URL!);
 url.searchParams.delete("sslmode");
 
 const adapter = new PrismaPg({
   connectionString: url.toString(),
-  ssl: { rejectUnauthorized: false },
+   ssl: { ca: supabaseCa }, 
 });
 const prisma = new PrismaClient({ adapter });
 

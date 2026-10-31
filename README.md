@@ -97,5 +97,4 @@ prisma/         Schema, migrations, seed script
 - No online payment yet (Cash on Delivery only)
 - No customer accounts; admin uses a single shared password
 - Product add/delete and image upload from the admin are not built yet
-- The local Prisma client and seed script relax TLS certificate verification for the Supabase pooler. This should be replaced with proper certificate trust before a production deployment
 - Not deployed yet

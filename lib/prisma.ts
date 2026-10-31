@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { supabaseCa } from "@/lib/supabase-ca";
 
 const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
 
@@ -9,7 +10,7 @@ function createClient() {
 
   const adapter = new PrismaPg({
     connectionString: url.toString(),
-    ssl: { rejectUnauthorized: false },
+    ssl: { ca: supabaseCa },
   });
   return new PrismaClient({ adapter });
 }
