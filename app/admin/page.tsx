@@ -4,12 +4,14 @@ import { redirect } from "next/navigation";
 import { isAdmin } from "@/lib/admin-auth";
 import { prisma } from "@/lib/prisma";
 import { formatPrice } from "@/data/products";
-import { logout, updateOrderStatus } from "./actions";
+import { logout, updateOrderStatus, updateProductPrice } from "./actions";
 
 export const metadata: Metadata = {
   title: "Admin | Jazz",
   robots: { index: false, follow: false },
 };
+
+const STATUSES = ["PENDING", "CONFIRMED", "SHIPPED", "DELIVERED", "CANCELLED"];
 
 async function AdminContent() {
   if (!(await isAdmin())) redirect("/admin/login");
@@ -18,6 +20,11 @@ async function AdminContent() {
     include: { items: true },
     orderBy: { createdAt: "desc" },
     take: 50,
+  });
+
+  const products = await prisma.product.findMany({
+    select: { slug: true, name: true, price: true },
+    orderBy: { name: "asc" },
   });
 
   return (
@@ -33,6 +40,36 @@ async function AdminContent() {
           </button>
         </form>
       </div>
+
+      <h2 className="text-xl font-semibold text-foreground mb-4">Products</h2>
+      <ul className="space-y-3 mb-12">
+        {products.map((p) => (
+          <li
+            key={`${p.slug}-${Number(p.price)}`}
+            className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-surface p-4"
+          >
+            <span className="text-foreground">{p.name}</span>
+            <form action={updateProductPrice} className="flex items-center gap-2">
+              <input type="hidden" name="slug" value={p.slug} />
+              <input
+                name="price"
+                type="number"
+                min="1"
+                step="0.01"
+                required
+                defaultValue={Number(p.price)}
+                className="w-32 rounded-full border border-border bg-background px-3 py-1 text-sm text-foreground"
+              />
+              <button
+                type="submit"
+                className="rounded-full bg-accent px-3 py-1 text-xs font-medium text-white hover:bg-accent-hover transition-colors"
+              >
+                Save
+              </button>
+            </form>
+          </li>
+        ))}
+      </ul>
 
       <h2 className="text-xl font-semibold text-foreground mb-4">
         Orders ({orders.length})
@@ -56,9 +93,12 @@ async function AdminContent() {
                     timeZone: "Asia/Colombo",
                   })}
                 </span>
-                             <form action={updateOrderStatus} className="flex flex-wrap items-center gap-2">
+                <form
+                  action={updateOrderStatus}
+                  className="flex flex-wrap items-center gap-2"
+                >
                   <input type="hidden" name="orderId" value={order.id} />
-                  {["PENDING", "CONFIRMED", "SHIPPED", "DELIVERED", "CANCELLED"].map((s) => (
+                  {STATUSES.map((s) => (
                     <button
                       key={s}
                       type="submit"
@@ -73,13 +113,18 @@ async function AdminContent() {
                       {s}
                     </button>
                   ))}
-                </form>                 
+                </form>
               </div>
 
               <div className="text-sm text-muted-foreground mb-3">
                 <p className="text-foreground">{order.customerName}</p>
-                <p>{order.phone}{order.email ? ` · ${order.email}` : ""}</p>
-                <p>{order.address}, {order.city}</p>
+                <p>
+                  {order.phone}
+                  {order.email ? ` · ${order.email}` : ""}
+                </p>
+                <p>
+                  {order.address}, {order.city}
+                </p>
                 {order.notes && <p>Notes: {order.notes}</p>}
               </div>
 
@@ -89,7 +134,8 @@ async function AdminContent() {
                     <span className="text-foreground">
                       {item.name}
                       <span className="text-muted-foreground">
-                        {" "}({item.color} / {item.size}) x {item.quantity}
+                        {" "}
+                        ({item.color} / {item.size}) x {item.quantity}
                       </span>
                     </span>
                     <span className="text-foreground">

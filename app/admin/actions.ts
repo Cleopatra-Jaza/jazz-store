@@ -44,3 +44,21 @@ export async function updateOrderStatus(formData: FormData): Promise<void> {
 
   revalidatePath("/admin");
 }
+
+export async function updateProductPrice(formData: FormData): Promise<void> {
+  if (!(await isAdmin())) redirect("/admin/login");
+
+  const slug = String(formData.get("slug") ?? "");
+  const price = Number(formData.get("price"));
+
+  if (!slug || !Number.isFinite(price) || price <= 0 || price > 10_000_000) {
+    return;
+  }
+
+  await prisma.product.update({
+    where: { slug },
+    data: { price: Math.round(price * 100) / 100 },
+  });
+
+  revalidatePath("/", "layout");
+}

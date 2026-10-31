@@ -30,7 +30,14 @@ async function main() {
 
     await prisma.product.upsert({
       where: { slug: p.slug },
-      update: { ...data, variants: { deleteMany: {}, create: variants } },
+            update: {
+        name: data.name,
+        category: data.category,
+        gender: data.gender,
+        description: data.description,
+        sizes: data.sizes,
+        variants: { deleteMany: {}, create: variants },
+      },
       create: { slug: p.slug, ...data, variants: { create: variants } },
     });
   }
