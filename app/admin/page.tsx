@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { isAdmin } from "@/lib/admin-auth";
 import { prisma } from "@/lib/prisma";
 import { formatPrice } from "@/data/products";
-import { logout } from "./actions";
+import { logout, updateOrderStatus } from "./actions";
 
 export const metadata: Metadata = {
   title: "Admin | Jazz",
@@ -56,9 +56,24 @@ async function AdminContent() {
                     timeZone: "Asia/Colombo",
                   })}
                 </span>
-                <span className="rounded-full border border-border px-3 py-1 text-xs text-foreground">
-                  {order.status}
-                </span>
+                             <form action={updateOrderStatus} className="flex flex-wrap items-center gap-2">
+                  <input type="hidden" name="orderId" value={order.id} />
+                  {["PENDING", "CONFIRMED", "SHIPPED", "DELIVERED", "CANCELLED"].map((s) => (
+                    <button
+                      key={s}
+                      type="submit"
+                      name="status"
+                      value={s}
+                      className={`rounded-full border px-3 py-1 text-xs transition-colors ${
+                        order.status === s
+                          ? "border-accent bg-accent text-white"
+                          : "border-border text-foreground hover:bg-surface"
+                      }`}
+                    >
+                      {s}
+                    </button>
+                  ))}
+                </form>                 
               </div>
 
               <div className="text-sm text-muted-foreground mb-3">
