@@ -1,5 +1,7 @@
 # Jazz Store
 
+**Live demo:** https://jazz-store.vercel.app
+
 A full-stack e-commerce web app for premium motorsport-inspired apparel. Built as a portfolio project with a dark, luxury design, a Postgres database, server-side checkout and a password-protected admin area.
 ## Screenshots
 
@@ -97,4 +99,3 @@ prisma/         Schema, migrations, seed script
 - No online payment yet (Cash on Delivery only)
 - No customer accounts; admin uses a single shared password
 - Product add/delete and image upload from the admin are not built yet
-- Not deployed yet
